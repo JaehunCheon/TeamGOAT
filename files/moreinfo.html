@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOAT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="module">
+            // Firebase SDK 라이브러리 가져오기
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+            import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+            import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+            import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    
+    
+    
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+                apiKey: "AIzaSyB8jIYupeyi9J2agurGG1tjHIlWawC1-FU",
+                authDomain: "sparta-9e58a.firebaseapp.com",
+                projectId: "sparta-9e58a",
+                storageBucket: "sparta-9e58a.appspot.com",
+                messagingSenderId: "873804438345",
+                appId: "1:873804438345:web:af1df4dd687b19535b5898",
+                measurementId: "G-QQRJG71BK6"
+            };
+            
+    
+    
+            // Firebase 인스턴스 초기화
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+
+            //데이터 추가
+            $("#save").click(async function () {
+            let member = $('#member').val();
+            let comment = $('#comment').val();
+            let detail = $('#detail').val();
+            
+
+            let doc = {
+                'member': member,
+                'comment': comment,
+                'detail': detail,
+                
+            };
+            await addDoc(collection(db, "moreinfo"), doc);
+            alert('프로필 수정 완료!');
+            window.location.reload();
+            })
+
+             //library생성
+            let docs = await getDocs(collection(db, "moreinfo"));
+            docs.forEach((doc) => {
+            let row = doc.data();
+            let member = row['member']
+            let comment = row['comment']
+            let detail = row['detail']
+
+            
+            });
+            
+        </script>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap');
+
+    * {
+        font-family: "Sunflower", sans-serif;
+        font-weight: 300;
+        font-style: normal;
+    }
+    
+    .title {
+        text-align: center;
+    }
+
+    #moreinfo {
+        height: 320px;
+        margin: 20px;
+        
+        display: flex;
+        justify-content: center;
+    }
+
+    .image {
+        
+
+        padding: 20px 50px 20px 20px;
+        border-radius: 5px;
+        margin: 5px 0 0 5px;
+    }
+
+    .image img {
+        float: right;
+        width: 200px;
+    }
+
+    .info-detail {
+        height: 320px;
+        width: 280px;
+        
+        padding-left: 20px;
+    }
+
+    .shorts {
+        height: 200px;
+        padding-top: 40px;
+    }
+
+    .profile {
+        border: 3px outset rgb(186, 255, 172);
+        border-radius: 10px;
+
+        padding: 50px;
+        width: 700px;
+        height: 320px;
+        
+        background-color: rgb(186, 255, 172);
+        
+
+        position: relative;
+    }
+    #profilecenter{
+        
+        display: flex;
+        margin-left: 10%;
+        justify-content: center;
+    }
+    .profile li {
+        font-size: larger;
+    }
+
+    .btns {
+        text-align: center;
+        padding: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .btns button {
+        margin: 0 10px 0 10px;
+    }
+    .savebtn{
+        text-align: right;
+    }
+</style>
+
+<body>
+    <div class="title">
+        <h1>GOAT</h1>
+    </div>
+
+    <div id="moreinfo">
+        <div class="image">
+            <img class="zepimage" src="zepchar.jpg">
+        </div>
+
+        <div class="info-detail">
+            <div class="shorts">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">@</span>
+                    <input type="text" id ="member" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                <span class="input-group-text">상세정보</span>
+                <textarea class="form-control" aria-label="With textarea" id = "comment"></textarea>
+            </div>
+            <div class="btns">
+                <button class="btn btn-dark" type="button">Github</button>
+                <button type="button" class="btn btn-outline-secondary">blog</button>
+                
+            </div>
+        </div>
+
+    </div>
+    <div id="profilecenter">
+        <div class="profile">
+            <div>
+            <h1 style="margin-top: 0;">Profile</h1>
+            <div class="input-group">
+                <span class="input-group-text">상세정보</span>
+                <textarea class="form-control" aria-label="With textarea" id = "detail"></textarea>
+              </div>
+            
+            </div>
+            <div class="savebtn">
+            <button id="save">저장하기</button></div>
+        </div>
+        
+    </div>
+    
+    
+</body>
+
+</html>
